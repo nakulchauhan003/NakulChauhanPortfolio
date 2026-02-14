@@ -48,125 +48,146 @@ const HACKATHONS = [
   { name: 'MLSA Hackathon', desc: 'Designed a banking analytics solution that helps banks make financial decisions using automated AI-driven insights.' },
 ]
 
-/* ─── Styles ─── */
-const css = `
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+  *,*:: before,*::after{ margin: 0; padding: 0; box - sizing: border - box }
 :root{
-  --bg:#0a0a0f;--bg2:#12121a;--bg3:#1a1a2e;--bg4:#16213e;
-  --text:#e0e0e0;--text2:#a0a0b0;--accent:#9850e6;--accent2:#7b2ff7;
-  --gradient:linear-gradient(135deg,#9850e6,#7b2ff7,#6366f1);
-  --card-border:rgba(152,80,230,0.15);
+  --bg:#05050a; --bg2:#0a0a12; --bg3:#12121e; --bg4:#16213e;
+  --text: #ffffff; --text2: #b0b0c0; --accent: #a855f7; --accent2: #ec4899; --accent3:#6366f1;
+  --gradient: linear - gradient(135deg, #a855f7, #ec4899,#6366f1);
+  --gradient - hover: linear - gradient(135deg,#9333ea, #db2777,#4f46e5);
+  --glass: rgba(255, 255, 255, 0.03);
+  --glass - border: rgba(255, 255, 255, 0.08);
+  --glass - highlight: rgba(255, 255, 255, 0.15);
+  --card - border: rgba(168, 85, 247, 0.2);
+  --shadow - glow: 0 0 20px rgba(168, 85, 247, 0.3);
 }
-html{scroll-behavior:smooth}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.6}
-a{color:inherit;text-decoration:none}
-::selection{background:var(--accent);color:#fff}
-::-webkit-scrollbar{width:6px}
-::-webkit-scrollbar-track{background:var(--bg)}
-::-webkit-scrollbar-thumb{background:var(--accent2);border-radius:3px}
+html{ scroll - behavior: smooth }
+body{ font - family: 'Outfit', 'Inter', system - ui, sans - serif; background: var(--bg); color: var(--text); overflow - x: hidden; line - height: 1.6; position: relative }
+a{ color: inherit; text - decoration: none }
+::selection{ background: var(--accent2); color: #fff }
+:: -webkit - scrollbar{ width: 8px }
+:: -webkit - scrollbar - track{ background: var(--bg) }
+:: -webkit - scrollbar - thumb{ background: var(--bg3); border: 1px solid var(--glass - border); border - radius: 4px }
+:: -webkit - scrollbar - thumb:hover{ background: var(--accent) }
 
-.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;backdrop-filter:blur(20px);background:rgba(10,10,15,0.8);border-bottom:1px solid var(--card-border);transition:all 0.3s}
-.nav.scrolled{padding:0.6rem 2rem;background:rgba(10,10,15,0.95)}
-.nav-logo{font-size:1.4rem;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.nav-links{display:flex;gap:1.5rem;list-style:none}
-.nav-links a{font-size:0.9rem;font-weight:500;color:var(--text2);transition:color 0.3s;position:relative}
-.nav-links a:hover{color:var(--accent)}
-.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--gradient);transition:width 0.3s}
-.nav-links a:hover::after{width:100%}
-.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
-.hamburger span{width:24px;height:2px;background:var(--text);transition:all 0.3s}
-.mobile-menu{display:none;position:fixed;top:60px;left:0;right:0;background:rgba(10,10,15,0.98);backdrop-filter:blur(20px);padding:1.5rem;border-bottom:1px solid var(--card-border);z-index:99}
-.mobile-menu.open{display:flex;flex-direction:column;gap:1rem}
-.mobile-menu a{font-size:1.1rem;color:var(--text2);padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+/* Background Blobs */
+.bg - blobs{ position: fixed; top: 0; left: 0; width: 100 %; height: 100 %; z - index: -1; overflow: hidden; pointer - events: none }
+.blob{ position: absolute; border - radius: 50 %; filter: blur(60px); opacity: 0.4; animation:float 10s infinite ease -in -out alternate }
+.blob - 1{ top: -10 %; left: -10 %; width: 50vw; height: 50vw; background: var(--accent); animation - duration: 25s }
+.blob - 2{ bottom: -10 %; right: -10 %; width: 40vw; height: 40vw; background: var(--accent3); animation - duration: 30s; animation - delay: -5s }
+.blob - 3{ top: 40 %; left: 40 %; width: 30vw; height: 30vw; background: var(--accent2); filter: blur(80px); opacity: 0.25; animation - duration: 20s; animation - delay: -10s }
+@keyframes float{ 0 % { transform: translate(0, 0) scale(1) } 100 % { transform: translate(20px, 40px) scale(1.1) } }
 
-.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:2rem}
-.hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 50%,rgba(152,80,230,0.08) 0%,transparent 50%),radial-gradient(circle at 70% 50%,rgba(99,102,241,0.06) 0%,transparent 50%);animation:bgPulse 8s ease-in-out infinite alternate}
-@keyframes bgPulse{0%{transform:scale(1)}100%{transform:scale(1.1)}}
-.hero-content{text-align:center;position:relative;z-index:1;max-width:800px}
-.hero-badge{display:inline-block;padding:0.4rem 1.2rem;border-radius:50px;background:rgba(152,80,230,0.15);border:1px solid rgba(152,80,230,0.3);color:var(--accent);font-size:0.85rem;font-weight:500;margin-bottom:1.5rem;letter-spacing:1px}
-.hero h1{font-size:clamp(2.5rem,6vw,4.5rem);font-weight:900;line-height:1.1;margin-bottom:1rem}
-.hero h1 .gradient{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.hero p{font-size:1.15rem;color:var(--text2);max-width:600px;margin:0 auto 2rem}
-.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
-.btn{padding:0.75rem 2rem;border-radius:50px;font-weight:600;font-size:0.95rem;cursor:pointer;transition:all 0.3s;border:none;display:inline-flex;align-items:center;gap:0.5rem}
-.btn-primary{background:var(--gradient);color:#fff;box-shadow:0 4px 20px rgba(152,80,230,0.3)}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(152,80,230,0.4)}
-.btn-outline{background:transparent;color:var(--accent);border:2px solid var(--accent)}
-.btn-outline:hover{background:rgba(152,80,230,0.1);transform:translateY(-2px)}
-.typing{font-family:'Fira Code',monospace;font-size:1.1rem;color:var(--accent);min-height:1.8rem;margin-bottom:1.5rem}
+/* Nav */
+.nav{ position: fixed; top: 0; left: 0; right: 0; z - index: 1000; padding: 1.2rem 2rem; display: flex; justify - content: space - between; align - items: center; transition:all 0.4s ease }
+.nav.scrolled{ padding: 0.8rem 2rem; background: rgba(5, 5, 10, 0.85); backdrop - filter: blur(16px); border - bottom: 1px solid var(--glass - border); box - shadow: 0 4px 30px rgba(0, 0, 0, 0.1) }
+.nav - logo{ font - size: 1.6rem; font - weight: 800; letter - spacing: -0.5px; position: relative }
+.nav - logo::after{ content: '.'; color: var(--accent2) }
+.nav - links{ display: flex; gap: 2rem; list - style: none }
+.nav - links a{ font - size: 0.95rem; font - weight: 500; color: var(--text2); transition:all 0.3s; padding: 0.5rem 0; position: relative }
+.nav - links a:hover{ color: var(--text) }
+.nav - links a::after{ content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--gradient); transition:width 0.3s ease }
+.nav - links a: hover::after{ width: 100 %}
 
-section{padding:5rem 2rem;max-width:1100px;margin:0 auto}
-.section-title{font-size:2rem;font-weight:800;text-align:center;margin-bottom:0.5rem}
-.section-title .gradient{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.section-sub{text-align:center;color:var(--text2);margin-bottom:3rem;font-size:0.95rem}
-.divider{width:60px;height:4px;background:var(--gradient);border-radius:2px;margin:0.8rem auto 0}
+/* Mobile Menu */
+.hamburger{ display: none; flex - direction: column; gap: 6px; cursor: pointer; background: none; border: none; padding: 5px }
+.hamburger span{ width: 26px; height: 2px; background: var(--text); transition:all 0.3s }
+.mobile - menu{ display: none; position: fixed; top: 70px; left: 0; right: 0; background: rgba(5, 5, 10, 0.95); backdrop - filter: blur(20px); padding: 2rem; border - bottom: 1px solid var(--glass - border); z - index: 999; animation:slideDown 0.4s ease forwards }
+@keyframes slideDown{from{ opacity: 0; transform: translateY(-20px) }to{ opacity: 1; transform: translateY(0) } }
+.mobile - menu.open{ display: flex; flex - direction: column; gap: 1.2rem }
+.mobile - menu a{ font - size: 1.2rem; color: var(--text2); padding: 0.8rem 0; border - bottom: 1px solid var(--glass - border) }
+.mobile - menu a:hover{ color: var(--accent); padding - left: 10px; transition:all 0.3s }
 
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}
-.about-text h3{font-size:1.5rem;margin-bottom:1rem}
-.about-text p{color:var(--text2);margin-bottom:1rem;font-size:0.95rem}
-.about-info{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;margin-top:1.5rem}
-.about-info div{padding:0.8rem;background:var(--bg2);border-radius:10px;border:1px solid var(--card-border)}
-.about-info span{font-size:0.75rem;color:var(--text2);display:block}
-.about-info strong{font-size:0.9rem;color:var(--text)}
-.about-code{background:var(--bg2);border:1px solid var(--card-border);border-radius:16px;padding:1.5rem;font-family:'Fira Code',monospace;font-size:0.82rem;line-height:1.8;overflow:auto}
-.about-code .kw{color:#c792ea}.about-code .fn{color:#82aaff}.about-code .str{color:#c3e88d}.about-code .cm{color:#546e7a}
+/* Hero */
+.hero{ min - height: 100vh; display: flex; align - items: center; justify - content: center; position: relative; padding: 2rem; text - align: center }
+.hero - content{ z - index: 10; max - width: 900px }
+.hero - badge{ display: inline - block; padding: 0.5rem 1.5rem; border - radius: 50px; background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.3); color: var(--accent2); font - size: 0.8rem; font - weight: 600; margin - bottom: 1.5rem; letter - spacing: 1.5px; text - transform: uppercase; backdrop - filter: blur(5px); box - shadow: 0 0 15px rgba(168, 85, 247, 0.2) }
+.hero h1{ font - size: clamp(3rem, 8vw, 5.5rem); font - weight: 900; line - height: 1.1; margin - bottom: 1.2rem; letter - spacing: -2px }
+.hero h1.gradient{ background: var(--gradient); -webkit - background - clip: text; -webkit - text - fill - color: transparent; background - size: 200 % auto; animation:textShimmer 5s linear infinite }
+@keyframes textShimmer{ 0 % { background- position: 0 % 50 %} 100 % { background- position: 200 % 50 %}}
+.hero p{ font - size: 1.25rem; color: var(--text2); max - width: 650px; margin: 0 auto 2.5rem; line - height: 1.7 }
+.hero - btns{ display: flex; gap: 1.2rem; justify - content: center; flex - wrap: wrap }
 
-.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
-.skill-card{background:var(--bg2);border:1px solid var(--card-border);border-radius:16px;padding:1.5rem;transition:all 0.3s}
-.skill-card:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:0 8px 30px rgba(152,80,230,0.15)}
-.skill-card h4{color:var(--accent);margin-bottom:1rem;font-size:1rem}
-.skill-tags{display:flex;flex-wrap:wrap;gap:0.5rem}
-.skill-tag{padding:0.35rem 0.8rem;background:rgba(152,80,230,0.1);border:1px solid rgba(152,80,230,0.2);border-radius:20px;font-size:0.8rem;color:var(--text);transition:all 0.3s}
-.skill-tag:hover{background:rgba(152,80,230,0.25);transform:scale(1.05)}
+/* Buttons */
+.btn{ padding: 0.8rem 2.2rem; border - radius: 50px; font - weight: 600; font - size: 1rem; cursor: pointer; transition:all 0.3s ease; border: none; display: inline - flex; align - items: center; gap: 0.6rem; position: relative; overflow: hidden; z - index: 1 }
+.btn - primary{ background: var(--gradient); color: #fff; box - shadow: 0 4px 25px rgba(168, 85, 247, 0.4) }
+.btn - primary::before{ content: ''; position: absolute; top: 0; left: 0; width: 100 %; height: 100 %; background: var(--gradient - hover); opacity: 0; z - index: -1; transition:opacity 0.3s }
+.btn - primary:hover{ transform: translateY(-3px); box - shadow: 0 8px 35px rgba(236, 72, 153, 0.5) }
+.btn - primary: hover::before{ opacity: 1 }
+.btn - outline{ background: rgba(255, 255, 255, 0.03); color: #fff; border: 1px solid rgba(255, 255, 255, 0.2); backdrop - filter: blur(5px) }
+.btn - outline:hover{ background: rgba(255, 255, 255, 0.1); border - color: var(--accent); transform: translateY(-3px); box - shadow: 0 4px 20px rgba(0, 0, 0, 0.2) }
 
-.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.5rem}
-.project-card{background:var(--bg2);border:1px solid var(--card-border);border-radius:16px;padding:1.8rem;transition:all 0.3s;position:relative;overflow:hidden}
-.project-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gradient);transform:scaleX(0);transition:transform 0.3s;transform-origin:left}
-.project-card:hover::before{transform:scaleX(1)}
-.project-card:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:0 8px 30px rgba(152,80,230,0.15)}
-.project-card h4{font-size:1.1rem;margin-bottom:0.6rem}
-.project-card p{color:var(--text2);font-size:0.88rem;margin-bottom:1rem;line-height:1.6}
-.project-tags{display:flex;flex-wrap:wrap;gap:0.4rem}
-.project-tags span{padding:0.25rem 0.65rem;background:rgba(152,80,230,0.1);border-radius:12px;font-size:0.75rem;color:var(--accent)}
+.typing{ font - family: 'Fira Code', monospace; font - size: 1.2rem; color: var(--accent3); min - height: 1.8rem; margin - bottom: 2rem; display: inline - block; padding: 0.2rem 0.8rem; background: rgba(99, 102, 241, 0.1); border - radius: 4px }
 
-.timeline{position:relative;padding-left:2rem}
-.timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--gradient)}
-.timeline-item{position:relative;margin-bottom:2rem;padding-left:1.5rem}
-.timeline-item::before{content:'';position:absolute;left:-2.35rem;top:0.4rem;width:12px;height:12px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px rgba(152,80,230,0.5)}
-.timeline-item h4{font-size:1.05rem;margin-bottom:0.2rem}
-.timeline-item .company{color:var(--accent);font-size:0.9rem;font-weight:500}
-.timeline-item .date{color:var(--text2);font-size:0.8rem;margin-bottom:0.5rem}
-.timeline-item p{color:var(--text2);font-size:0.88rem}
+/* Sections */
+section{ padding: 6rem 2rem; max - width: 1200px; margin: 0 auto }
+.section - title{ font - size: 2.5rem; font - weight: 800; text - align: center; margin - bottom: 0.5rem; letter - spacing: -1px }
+.section - title.gradient{ background: var(--gradient); -webkit - background - clip: text; -webkit - text - fill - color: transparent }
+.section - sub{ text - align: center; color: var(--text2); margin - bottom: 4rem; font - size: 1.1rem }
 
-.cert-list{display:grid;gap:0.8rem;max-width:800px;margin:0 auto}
-.cert-item{padding:1rem 1.5rem;background:var(--bg2);border:1px solid var(--card-border);border-radius:12px;font-size:0.9rem;transition:all 0.3s;display:flex;align-items:center;gap:0.8rem}
-.cert-item:hover{border-color:var(--accent);transform:translateX(4px)}
-.cert-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0}
+/* Cards & Grid */
+.glass - panel{ background: var(--bg2); border: 1px solid var(--glass - border); border - radius: 24px; padding: 2rem; position: relative; overflow: hidden; transition:all 0.4s ease; box - shadow: 0 4px 20px rgba(0, 0, 0, 0.2) }
+.glass - panel::before{ content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear - gradient(90deg, transparent,var(--glass - highlight), transparent); opacity: 0.5 }
+.glass - panel:hover{ transform: translateY(-8px); border - color: var(--accent); box - shadow: var(--shadow - glow) }
 
-.hackathon-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;max-width:800px;margin:0 auto}
-.hackathon-card{background:var(--bg2);border:1px solid var(--card-border);border-radius:16px;padding:1.5rem;transition:all 0.3s}
-.hackathon-card:hover{border-color:var(--accent);transform:translateY(-3px)}
-.hackathon-card h4{color:var(--accent);margin-bottom:0.5rem}
-.hackathon-card p{color:var(--text2);font-size:0.88rem}
+.about - grid{ display: grid; grid - template - columns: 1.2fr 1fr; gap: 4rem; align - items: start }
+.about - text h3{ font - size: 1.8rem; margin - bottom: 1.5rem; background: linear - gradient(to right, #fff, #b0b0c0); -webkit - background - clip: text; -webkit - text - fill - color: transparent }
+.about - text p{ color: var(--text2); margin - bottom: 1.5rem; font - size: 1.05rem }
+.about - info{ display: grid; grid - template - columns: repeat(auto - fit, minmax(140px, 1fr)); gap: 1rem; margin - top: 2rem }
+.about - info div{ padding: 1rem; background: rgba(255, 255, 255, 0.03); border - radius: 16px; border: 1px solid var(--glass - border); text - align: center; transition:all 0.3s }
+.about - info div:hover{ background: rgba(255, 255, 255, 0.06); border - color: var(--accent3) }
+.about - info span{ font - size: 0.8rem; color: var(--text2); display: block; margin - bottom: 0.3rem; text - transform: uppercase; letter - spacing: 1px }
+.about - info strong{ font - size: 1rem; color: #fff }
+.about - code{ font - family: 'Fira Code', monospace; font - size: 0.85rem; line - height: 1.7; box - shadow: 0 10px 40px rgba(0, 0, 0, 0.3) }
 
-.contact{text-align:center}
-.contact p{color:var(--text2);margin-bottom:2rem;max-width:500px;margin-left:auto;margin-right:auto}
-.contact-links{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem}
-.contact-btn{padding:0.7rem 1.5rem;background:var(--bg2);border:1px solid var(--card-border);border-radius:50px;display:flex;align-items:center;gap:0.5rem;font-size:0.9rem;transition:all 0.3s;color:var(--text)}
-.contact-btn:hover{border-color:var(--accent);background:rgba(152,80,230,0.1);transform:translateY(-2px)}
+.skills - grid{ display: grid; grid - template - columns: repeat(auto - fit, minmax(280px, 1fr)); gap: 2rem }
+.skill - card{ background: var(--bg2); border: 1px solid var(--glass - border); border - radius: 20px; padding: 2rem; transition:all 0.4s cubic - bezier(0.175, 0.885, 0.32, 1.275) }
+.skill - card:hover{ transform: translateY(-5px) scale(1.02); border - color: var(--accent2); box - shadow: 0 10px 30px rgba(236, 72, 153, 0.15) }
+.skill - card h4{ color: var(--accent2); margin - bottom: 1.2rem; font - size: 1.2rem; font - weight: 700 }
+.skill - tags{ display: flex; flex - wrap: wrap; gap: 0.6rem }
+.skill - tag{ padding: 0.4rem 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border - radius: 50px; font - size: 0.85rem; color: var(--text2); transition:all 0.3s }
+.skill - tag:hover{ background: var(--accent2); border - color: var(--accent2); color: #fff; transform: translateY(-2px) }
 
-footer{text-align:center;padding:2rem;border-top:1px solid var(--card-border);color:var(--text2);font-size:0.85rem}
+.projects - grid{ display: grid; grid - template - columns: repeat(auto - fit, minmax(340px, 1fr)); gap: 2rem }
+.project - card{ background: var(--bg2); border: 1px solid var(--glass - border); border - radius: 24px; padding: 2.2rem; transition:all 0.4s ease; display: flex; flex - direction: column; height: 100 %; position: relative; z - index: 1 }
+.project - card::after{ content: ''; position: absolute; inset: 0; background: radial - gradient(400px circle at var(--mouse - x, 50 %) var(--mouse - y, 50 %), rgba(255, 255, 255, 0.06), transparent 40 %); border - radius: 24px; z - index: -1; opacity: 0; transition:opacity 0.3s }
+.project - card: hover::after{ opacity: 1 }
+.project - card:hover{ transform: translateY(-10px); border - color: var(--accent3); box - shadow: 0 15px 40px rgba(99, 102, 241, 0.2) }
+.project - card h4{ font - size: 1.4rem; margin - bottom: 0.8rem; font - weight: 700 }
+.project - card p{ color: var(--text2); font - size: 0.95rem; margin - bottom: 1.5rem; line - height: 1.7; flex - grow: 1 }
+.project - tags span{ padding: 0.3rem 0.8rem; background: rgba(99, 102, 241, 0.1); border - radius: 8px; font - size: 0.75rem; color: var(--accent3); border: 1px solid rgba(99, 102, 241, 0.2) }
 
-.fade-in{opacity:0;transform:translateY(30px);transition:all 0.6s ease}
-.fade-in.visible{opacity:1;transform:translateY(0)}
+.timeline{ position: relative; padding - left: 3rem; max - width: 800px; margin: 3rem auto 0 }
+.timeline::before{ content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: rgba(255, 255, 255, 0.1); border - radius: 3px }
+.timeline - item{ position: relative; margin - bottom: 3.5rem; padding - left: 1rem }
+.timeline - item::before{ content: ''; position: absolute; left: -3.6rem; top: 0.4rem; width: 20px; height: 20px; border - radius: 50 %; background: var(--bg); border: 4px solid var(--accent); box - shadow: 0 0 0 4px rgba(168, 85, 247, 0.2); transition:all 0.3s }
+.timeline - item: hover::before{ background: var(--accent); box - shadow: 0 0 20px var(--accent) }
+.timeline - item h4{ font - size: 1.3rem; margin - bottom: 0.3rem }
+.timeline - item.company{ color: var(--accent); font - size: 1rem; font - weight: 600; margin - bottom: 0.2rem }
+.timeline - item.date{ display: inline - block; padding: 0.2rem 0.8rem; background: rgba(255, 255, 255, 0.05); border - radius: 4px; font - size: 0.8rem; color: var(--text2); margin - bottom: 1rem }
+.timeline - item p{ color: var(--text2); font - size: 1rem; line - height: 1.7 }
 
-@media(max-width:768px){
-  .nav-links{display:none}
-  .hamburger{display:flex}
-  .about-grid{grid-template-columns:1fr}
-  .hero h1{font-size:2.2rem}
-  .projects-grid{grid-template-columns:1fr}
-  section{padding:3rem 1.2rem}
+.contact{ text - align: center; position: relative; padding: 6rem 2rem }
+.contact - container{ background: linear - gradient(180deg, var(--bg2) 0 %, rgba(10, 10, 12, 0) 100 %); border - radius: 30px; padding: 4rem 2rem; border: 1px solid var(--glass - border); position: relative; overflow: hidden }
+.contact - container::before{ content: ''; position: absolute; top: -50 %; left: 50 %; transform: translateX(-50 %); width: 400px; height: 400px; background: var(--accent); filter: blur(100px); opacity: 0.15; border - radius: 50 %; z - index: -1 }
+.contact p{ font - size: 1.2rem; max - width: 600px; margin: 0 auto 2.5rem; color: var(--text2) }
+.contact - links{ display: flex; gap: 1.5rem; justify - content: center; flex - wrap: wrap }
+.contact - btn{ padding: 1rem 2rem; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--glass - border); border - radius: 16px; display: flex; align - items: center; gap: 0.8rem; font - size: 1rem; font - weight: 500; transition:all 0.3s; color: var(--text); backdrop - filter: blur(5px) }
+.contact - btn:hover{ background: var(--accent); border - color: var(--accent); transform: translateY(-5px); box - shadow: 0 10px 30px rgba(168, 85, 247, 0.4) }
+
+footer{ text - align: center; padding: 3rem; color: var(--text2); font - size: 0.9rem; border - top: 1px solid var(--glass - border); background: var(--bg) }
+
+.fade -in { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic- bezier(0.2, 0.8, 0.2, 1)}
+.fade -in.visible{ opacity: 1; transform: translateY(0) }
+
+@media(max - width: 768px) {
+  .nav - links{ display: none }
+  .hamburger{ display: flex }
+  .about - grid{ grid - template - columns: 1fr }
+  .hero h1{ font - size: 2.8rem }
+  .projects - grid{ grid - template - columns: 1fr }
+  .about - code{ font - size: 0.75rem; padding: 1rem }
+  .blob{ opacity: 0.6 }
 }
 `
 
@@ -221,7 +242,7 @@ const useFadeIn = () => {
 
 const FadeIn = ({ children, className = '', ...props }) => {
   const ref = useFadeIn()
-  return <div ref={ref} className={`fade-in ${className}`} {...props}>{children}</div>
+  return <div ref={ref} className={`fade -in ${ className } `} {...props}>{children}</div>
 }
 
 /* ─── App ─── */
@@ -243,17 +264,17 @@ export default function App() {
       <style>{css}</style>
 
       {/* Nav */}
-      <nav className={`nav ${scrolled ? 'scrolled' : ''}`}>
+      <nav className={`nav ${ scrolled ? 'scrolled' : '' } `}>
         <a href="#" className="nav-logo">NC</a>
         <ul className="nav-links">
-          {navItems.map(item => <li key={item}><a href={`#${item.toLowerCase()}`}>{item}</a></li>)}
+          {navItems.map(item => <li key={item}><a href={`#${ item.toLowerCase() } `}>{item}</a></li>)}
         </ul>
         <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)} aria-label="Menu">
           <span /><span /><span />
         </button>
       </nav>
-      <div className={`mobile-menu ${menuOpen ? 'open' : ''}`}>
-        {navItems.map(item => <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setMenuOpen(false)}>{item}</a>)}
+      <div className={`mobile - menu ${ menuOpen ? 'open' : '' } `}>
+        {navItems.map(item => <a key={item} href={`#${ item.toLowerCase() } `} onClick={() => setMenuOpen(false)}>{item}</a>)}
       </div>
 
       {/* Hero */}
