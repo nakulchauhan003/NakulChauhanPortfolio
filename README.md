@@ -4,7 +4,7 @@ A modern, responsive developer portfolio built with **React** and **Vite**, feat
 
 ## 🔗 Live Preview
 
-👉 **[nakulchauhan003.github.io/nakul-chauhan-portfolio](https://nakulchauhan003.github.io/nakul-chauhan-portfolio/)**
+👉 **[nakulchauhan003.github.io/NakulChauhanPortfolio](https://nakulchauhan003.github.io/NakulChauhanPortfolio/)**
 
 ## ✨ Features
 

@@ -2,7 +2,7 @@
   "name": "nakul-portfolio",
   "type": "module",
   "private": true,
-  "homepage": "https://nakulchauhan003.github.io/nakul-chauhan-portfolio/",
+  "homepage": "https://nakulchauhan003.github.io/NakulChauhanPortfolio/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
